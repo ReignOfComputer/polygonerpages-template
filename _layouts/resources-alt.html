@@ -1,0 +1,110 @@
+---
+layout: skeleton
+---
+<section class="bp-section is-small bp-section-pagetitle">
+    <div class="bp-container">
+        {%- include header-breadcrumb.html -%}
+    </div>
+    <div class="bp-container ">
+        <div class="row">
+            <div class="col">
+                <h1 class="has-text-white"><b>{{page.title}}</b></h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+{%- assign resources_name_with_slashes = site.resources_name | prepend: "/" | append: "/" -%}
+{%- assign page_url_no_whitespace =  page.url -%}
+{%- capture page_category -%}
+    {{- page_url_no_whitespace | remove: resources_name_with_slashes | remove: "/" -}} 
+{%- endcapture -%}
+
+
+{%- comment -%} Define category_index - the index used to determine the bg-color-{{category_index}} {%- endcomment -%}
+{%- for post in site.posts -%}
+    {%- if post.categories[1] == page_category -%}
+        {%- assign samplePost = post -%}
+        {%- assign post_category = samplePost.categories[1] -%}
+        {%- break -%}
+    {%- endif -%}
+    {%- if post.categories[0] == page_category -%}
+        {%- assign samplePost = post -%}
+        {%- assign post_category = samplePost.categories[0] -%}
+        {%- break -%}
+    {%- endif -%}
+{%- endfor -%}
+{%- comment -%} Define category_index - the index used to determine the bg-color-{{category_index}} {%- endcomment -%}
+{%- comment -%} Fallback in case category_index is not set in the for loop {%- endcomment -%}
+{%- assign category_index = 1 -%}
+{%- for category in site.categories -%}
+    {%- capture category_name -%}{{- category | first -}}{%- endcapture -%}
+    {%- if category_name == post_category -%}
+        {%- assign category_index = forloop.index0 | modulo:5 | plus:1 -%}
+        {%- break -%}
+    {%- endif -%}
+{%- endfor -%}
+
+{%- include resource-category-buttons.html -%}
+
+{%- comment -%} Posts {%- endcomment -%}
+<section class="bp-section is-small">
+    <div class="bp-container padding--top padding--bottom--xl">
+        <div class="row is-multiline">
+            {%- for post in site.posts -%}
+                {%- if post.categories[1] == ' ' -%}
+{%- comment -%}                 <div class="col is-3 resource-card-element hide">
+                    <img src="/assets/img/media-releases/1.jpg" alt="">
+                    <div class="news-content">
+                        <div>
+                            <small class="tag has-text-grey">{{- post.categories[1] | upcase | replace: '-', ' ' -}}</small>
+                            <h4 class="title">
+                            <a href="{{- post.url | relative_url | append: '.html'}}" class="has-text-grey-dark is-media-card">{{- post.title | truncatewords : 10}}</a>
+                            </h4>
+                        </div>
+                        <small class="date has-text-grey">
+                            {{- post.date | date_to_string -}}
+                        </small>
+                    </div>
+                </div> {%- endcomment -%}
+                {%- elsif post.categories[1] == page_category -%}
+                <div class="col is-one-quarter-widescreen is-one-third-desktop is-half-tablet resource-card-element hide" id="{{- post.date | date: "%Y" -}}">
+                    {%- if post.external -%}
+                        <a href="{{- post.external -}}" class="is-media-card" target="_blank">
+                    {%- elsif post.file_url -%}
+                        <a href="{{- post.file_url -}}" class="is-media-card" target="_blank">
+                    {%- else -%}
+                        <a href="{{- post.permalink | relative_url -}}" class="is-media-card">
+                    {%- endif -%}
+                    <div class="media-card-plain bg-media-color-{{category_index}} padding--lg">
+                        <div>
+                            <small class="has-text-white padding--bottom">{{- post_category | upcase | replace: '-', ' ' | replace: '_', ' ' -}}</small>
+                            <h5 class="has-text-white"><b>{{- post.title | truncatewords: 15 -}}</b></h5>
+                        </div>
+                        <div class="is-fluid padding--top-md description">
+                            <small class="has-text-white is-inline">{{- post.date | date_to_string | upcase -}}</small>
+                            {%- if post.file_url -%}
+                                <small class="has-text-white">  
+                                    <span class="sgds-icon sgds-icon-download align-right is-size-4"></span>
+                                </small>
+                            {%- elsif post.layout == 'link' -%}
+                                <small class="has-text-white">
+                                    <span class="bx bx-link-external align-right is-size-4"></span>
+                                </small>
+                            {%- endif -%}
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                {%- endif -%}
+            {%- endfor -%}
+        </div>
+    </div>
+</section>
+
+<div class="search pagination padding--bottom--xl">
+    <span class="sgds-icon sgds-icon-arrow-left is-size-4"></span>
+    {%- comment -%} To insert page selectors {%- endcomment -%}
+    <div id="paginator-pages"></div>
+    <span class="sgds-icon sgds-icon-arrow-right is-size-4"></span>
+</div>
