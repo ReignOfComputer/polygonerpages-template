@@ -195,24 +195,6 @@
                             <p><a {{anchor}} title="Link to reach.gov.sg">REACH</a></p>
                         </li>
                     {%- endif -%}
-                    <li><p><a href="https://www.tech.gov.sg/report_vulnerability/">Report Vulnerability</a></p></li>
-                    {%- if site.data.footer.privacy_policy and site.data.footer.privacy_policy != "" -%}
-                        {%- assign url_input = site.data.footer.privacy_policy -%}
-                        {%- include functions/external_url.html -%}
-                    {%- else -%}
-                        {%- assign url_input = "/privacy/" -%}
-                        {%- include functions/external_url.html -%}
-                    {%- endif -%}
-                    <li><p><a {{anchor}}>Privacy Statement</a></p></li>
-                    
-                    {%- if site.data.footer.terms_of_use and site.data.footer.terms_of_use != "" -%}
-                        {%- assign url_input = site.data.footer.terms_of_use -%}
-                        {%- include functions/external_url.html -%}
-                    {%- else -%}
-                        {%- assign url_input = "/terms-of-use/" -%}
-                        {%- include functions/external_url.html -%}
-                    {%- endif -%}
-                    <li><p><a {{anchor}}>Terms of Use</a></p></li>
                 </ul>
             </div>
             {%- if social -%}
