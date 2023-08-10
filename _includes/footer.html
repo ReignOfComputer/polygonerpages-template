@@ -332,24 +332,6 @@
                             {%- include functions/external_url.html -%}
                             <p><a {{anchor}} title="Link to reach.gov.sg">REACH</a></p>
                     {%- endif -%}
-                    <p><a href="https://www.tech.gov.sg/report_vulnerability/">Report Vulnerability</a></p>
-                    {%- if site.data.footer.privacy_policy and site.data.footer.privacy_policy != "" -%}
-                        {%- assign url_input = site.data.footer.privacy_policy -%}
-                        {%- include functions/external_url.html -%}
-                    {%- else -%}
-                        {%- assign url_input = "/privacy/" -%}
-                        {%- include functions/external_url.html -%}
-                    {%- endif -%}
-                    <p><a {{anchor}}>Privacy Statement</a></p>
-                    
-                    {%- if site.data.footer.terms_of_use and site.data.footer.terms_of_use != "" -%}
-                        {%- assign url_input = site.data.footer.terms_of_use -%}
-                        {%- include functions/external_url.html -%}
-                    {%- else -%}
-                        {%- assign url_input = "/terms-of-use/" -%}
-                        {%- include functions/external_url.html -%}
-                    {%- endif -%}
-                    <p><a {{anchor}}>Terms of Use</a></p>
             </div>
         </div>
         <div class="row">
